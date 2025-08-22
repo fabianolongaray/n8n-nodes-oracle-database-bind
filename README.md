@@ -1,8 +1,8 @@
-# n8n-nodes-oracle-database-parameterization
+# n8n-nodes-oracle-database-bind
 
 [Oracle](https://docs.oracle.com/en/database/oracle/oracle-database/) database node for n8n
 
-Forked from https://www.npmjs.com/package/n8n-nodes-oracle-database with the intent of adding parameterization funcationality.
+Forked from https://www.npmjs.com/package/n8n-nodes-oracle-database-parameterization with the intent of adding bind variables type IN, OUT and INOUT.
 
 ## Normal Query Example![1708469710894](image/README/1708469710894.png)
 
