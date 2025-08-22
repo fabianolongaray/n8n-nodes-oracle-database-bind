@@ -4,9 +4,15 @@
 
 Forked from https://www.npmjs.com/package/n8n-nodes-oracle-database-parameterization with the intent of adding bind variables type IN, OUT and INOUT.
 
+
+
 ## Normal Query Example![1708469710894](image/README/1708469710894.png)
 
-### New Functionality (parameters)
+### New Functionality (bind variable OUT)
+
+![2025082213390](image/README/2025082213390.png)
+
+### Functionality from fork (parameters)
 
 Example query:
 
