@@ -90,13 +90,6 @@ export class OracleDatabase implements INodeType {
                 required: true,
               },
               {
-                displayName: "Value",
-                name: "value",
-                type: "string",
-                default: "",
-                placeholder: "Example: 12345 or 2024-01-01",
-              },
-              {
                 displayName: "Data Type",
                 name: "datatype",
                 type: "options",
@@ -122,11 +115,17 @@ export class OracleDatabase implements INodeType {
                 ],
               },
               {
-                displayName: "Max Size (OUT/INOUT text/buffer)",
-                name: "maxSize",
-                type: "number",
-                default: 2000,
-                hint: "Required for OUT/INOUT of STRING/CLOB/BLOB-ish values",
+                displayName: "Value",
+                name: "value",
+                type: "string",
+                default: "",
+                placeholder: "Example: 12345 or 2024-01-01",
+                required: true,
+                displayOptions: {
+                  show: {
+                    direction: ["in", "inout"],
+                  },
+                },
               },
               {
                 displayName: "Parse for IN statement",
@@ -139,6 +138,20 @@ export class OracleDatabase implements INodeType {
                   { name: "No", value: false },
                   { name: "Yes", value: true },
                 ],
+              },
+              {
+                displayName: "Max Size",
+                name: "maxSize",
+                type: "number",
+                default: 4000,
+                required: true,
+                hint: "Required for OUT/INOUT of STRING values",
+                displayOptions: {
+                  show: {
+                    direction: ["out", "inout"],
+                    datatype: ["string"],
+                  },
+                },
               },
             ],
           },
