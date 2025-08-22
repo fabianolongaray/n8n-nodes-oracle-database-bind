@@ -361,38 +361,16 @@ export class OracleDatabase implements INodeType {
         }
       );
 
-      // Linhas (SELECT) se houver
-      const rows = (execResult.rows as any[]) || [];
+      // Monte um único objeto com tudo
+      const item: IDataObject = {
+        metaData: (execResult as any).metaData,
+        rows: (execResult as any).rows,
+        rowsAffected: (execResult as any).rowsAffected,
+        lastRowid: (execResult as any).lastRowid,
+        outBinds: (execResult as any).outBinds,
+      };
 
-      // Resolver outBinds (inclusive REF CURSOR e RETURNING)
-      let resolvedOutBinds: IDataObject = {};
-      if ((execResult as any).outBinds) {
-        resolvedOutBinds = {
-          outBinds: (await normalizeOutBinds((execResult as any).outBinds)) as unknown as IDataObject,
-        };
-      }
-
-      // Montar items de saída
-      let items: IDataObject[] = [];
-      if (rows.length > 0) {
-        // Anexa outBinds (mesmo que vazio) em cada linha
-        items = rows.map((r) => ({ ...r, ...resolvedOutBinds }));
-      } else if (
-        typeof (execResult as any).rowsAffected !== "undefined" ||
-        (execResult as any).outBinds
-      ) {
-        // DML/PLSQL com OUT/RETURNING
-        items = [
-          {
-            rowsAffected: (execResult as any).rowsAffected,
-            ...resolvedOutBinds,
-          },
-        ];
-      } else {
-        items = [{}];
-      }
-
-      returnItems = this.helpers.returnJsonArray(items);
+      returnItems = this.helpers.returnJsonArray([item]);
     } catch (error: any) {
       throw new NodeOperationError(this.getNode(), error?.message || String(error));
     } finally {
